@@ -20,8 +20,10 @@ router.post("/forgot-password", (req, res) => controller.forgotPassword(req, res
 router.post("/reset-password",  (req, res) => controller.resetPassword(req, res));
 router.post("/google",          (req, res) => controller.googleAuth(req, res));
 
-// ── Protected Endpoint ───────────────────────────────────────────────────────
+// ── Protected Endpoints ──────────────────────────────────────────────────────
 
 router.get("/me", (req, res) => controller.me(req, res));
+router.post("/request-detox-otp", (req, res) => controller.requestDetoxOtp(req, res));
+router.post("/verify-detox-otp",  (req, res) => controller.verifyDetoxOtp(req, res));
 
 export default router;

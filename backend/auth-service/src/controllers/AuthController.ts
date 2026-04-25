@@ -362,4 +362,111 @@ export class AuthController {
             res.status(500).json({ error: message });
         }
     }
+    // ─── POST /api/auth/request-detox-otp ─────────────────────────────────────
+
+    public async requestDetoxOtp(req: Request, res: Response): Promise<void> {
+        console.log("[AUTH-CTRL] /request-detox-otp attempt");
+
+        try {
+            const authHeader = req.headers.authorization;
+            if (!authHeader || !authHeader.startsWith("Bearer ")) {
+                res.status(401).json({ success: false, error: "No token provided" });
+                return;
+            }
+
+            const decoded = verifyToken(authHeader.slice(7));
+            if (!decoded) {
+                res.status(401).json({ success: false, error: "Invalid or expired token" });
+                return;
+            }
+
+            // Verify user exists and get email
+            const userResult = await db.execute({
+                sql: "SELECT id, email FROM users WHERE id = ?",
+                args: [decoded.sub],
+            });
+
+            if (userResult.rows.length === 0) {
+                res.status(401).json({ success: false, error: "User not found" });
+                return;
+            }
+
+            const email = userResult.rows[0].email as string;
+            const otp = this.generateOtp();
+            const expiresAt = new Date(Date.now() + 10 * 60000).toISOString();
+
+            // Clear any existing detox OTPs for this user to prevent clutter
+            await db.execute({
+                sql: "DELETE FROM otps WHERE email = ? AND purpose = 'detox_end'",
+                args: [email]
+            });
+
+            await db.execute({
+                sql: "INSERT INTO otps (id, email, otp_code, purpose, expires_at) VALUES (?, ?, ?, ?, ?)",
+                args: [this.generateId(), email, otp, "detox_end", expiresAt],
+            });
+            await this.emailService.sendOtpEmail(email, otp, "detox_end");
+
+            console.log(`[AUTH-CTRL] ✅ Detox OTP sent to ${email}`);
+            res.json({ success: true, message: "Detox verification code sent." });
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : String(error);
+            console.error("[AUTH-CTRL] ❌ requestDetoxOtp error:", message);
+            res.status(500).json({ success: false, error: message });
+        }
+    }
+
+    // ─── POST /api/auth/verify-detox-otp ──────────────────────────────────────
+
+    public async verifyDetoxOtp(req: Request, res: Response): Promise<void> {
+        const { otp } = req.body;
+        console.log("[AUTH-CTRL] /verify-detox-otp attempt");
+
+        try {
+            const authHeader = req.headers.authorization;
+            if (!authHeader || !authHeader.startsWith("Bearer ")) {
+                res.status(401).json({ success: false, error: "No token provided" });
+                return;
+            }
+
+            const decoded = verifyToken(authHeader.slice(7));
+            if (!decoded) {
+                res.status(401).json({ success: false, error: "Invalid or expired token" });
+                return;
+            }
+
+            const userResult = await db.execute({
+                sql: "SELECT email FROM users WHERE id = ?",
+                args: [decoded.sub],
+            });
+
+            if (userResult.rows.length === 0) {
+                res.status(401).json({ success: false, error: "User not found" });
+                return;
+            }
+
+            const email = userResult.rows[0].email as string;
+            const now = new Date().toISOString();
+
+            const result = await db.execute({
+                sql: "SELECT id FROM otps WHERE email = ? AND otp_code = ? AND purpose = 'detox_end' AND expires_at > ?",
+                args: [email, otp, now],
+            });
+
+            if (result.rows.length === 0) {
+                res.status(400).json({ success: false, error: "Invalid or expired verification code" });
+                return;
+            }
+
+            // Valid code, delete it
+            await db.execute({ sql: "DELETE FROM otps WHERE id = ?", args: [result.rows[0].id] });
+
+            console.log(`[AUTH-CTRL] ✅ Detox OTP verified for ${email}`);
+            res.json({ success: true, message: "Detox verified successfully." });
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : String(error);
+            console.error("[AUTH-CTRL] ❌ verifyDetoxOtp error:", message);
+            res.status(500).json({ success: false, error: message });
+        }
+    }
 }
