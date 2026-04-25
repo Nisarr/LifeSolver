@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => ({
     },
     hmr: {
       overlay: false,
+      host: "localhost",
     },
     proxy: {
       "/api/auth": { target: "http://localhost:4001", changeOrigin: true },
@@ -67,7 +68,7 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       devOptions: {
-        enabled: true, // Enable PWA in development for testing
+        enabled: false, // Disabled PWA in development to fix HMR/caching issues
       },
       workbox: {
         maximumFileSizeToCacheInBytes: 10000000,

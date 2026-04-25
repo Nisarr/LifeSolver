@@ -45,6 +45,11 @@ export async function handleHabits(req: any, res: any, userId: string) {
         } catch (e: any) { return res.status(400).json({ error: e.errors || e.message }); }
     }
 
+    if (url.includes("/all") && method === "GET") {
+        const result = await db.execute({ sql: "SELECT * FROM habits WHERE user_id = ? ORDER BY title ASC", args: [userId] });
+        return res.json(result.rows);
+    }
+
     if (url.includes("/all") && method === "DELETE") {
         await db.execute({ sql: "DELETE FROM habits WHERE user_id = ?", args: [userId] });
         return res.json({ success: true });

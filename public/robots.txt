@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://lifesolver.app/sitemap.xml
+Sitemap: https://life-solver.vercel.app/sitemap.xml

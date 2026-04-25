@@ -151,7 +151,7 @@ export default function LoginPage() {
                                         <div className="w-3 h-3 rounded-full bg-amber-400/80" />
                                         <div className="w-3 h-3 rounded-full bg-emerald-400/80" />
                                     </div>
-                                    <p className="text-white/30 text-[10px] font-mono">lifesolver.app/dashboard</p>
+                                    <p className="text-white/30 text-[10px] font-mono">life-solver.vercel.app/dashboard</p>
                                     <div className="w-12" />
                                 </div>
 
@@ -433,3 +433,4 @@ export default function LoginPage() {
         </div>
     );
 }
+

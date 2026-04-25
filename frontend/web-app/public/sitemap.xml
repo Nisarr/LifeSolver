@@ -1,57 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lifesolver.app/</loc>
+    <loc>https://life-solver.vercel.app/</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://lifesolver.app/login</loc>
+    <loc>https://life-solver.vercel.app/login</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lifesolver.app/register</loc>
+    <loc>https://life-solver.vercel.app/register</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lifesolver.app/tasks</loc>
+    <loc>https://life-solver.vercel.app/tasks</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lifesolver.app/finance</loc>
+    <loc>https://life-solver.vercel.app/finance</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lifesolver.app/notes</loc>
+    <loc>https://life-solver.vercel.app/notes</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifesolver.app/habits</loc>
+    <loc>https://life-solver.vercel.app/habits</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifesolver.app/study</loc>
+    <loc>https://life-solver.vercel.app/study</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifesolver.app/inventory</loc>
+    <loc>https://life-solver.vercel.app/inventory</loc>
     <lastmod>2026-02-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 </urlset>
+

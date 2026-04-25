@@ -43,8 +43,8 @@ export class EmailService {
     ): Promise<void> {
         const subject =
             purpose === "registration"
-                ? "Welcome to LifeSolver.app - Verify Your Email"
-                : "LifeSolver.app - Password Reset Request";
+                ? "Welcome to life-solver.vercel.app - Verify Your Email"
+                : "life-solver.vercel.app - Password Reset Request";
 
         const bodyText =
             purpose === "registration"
@@ -53,7 +53,7 @@ export class EmailService {
 
         try {
             await this.transporter.sendMail({
-                from: `"LifeSolver.app" <${process.env.VITE_SMTP_USER || "noreply@lifesolver.app"}>`,
+                from: `"life-solver.vercel.app" <${process.env.VITE_SMTP_USER || "noreply@life-solver.vercel.app"}>`,
                 to,
                 subject,
                 html: this.buildOtpHtml(otp, bodyText),
@@ -71,7 +71,7 @@ export class EmailService {
     private buildOtpHtml(otp: string, bodyText: string): string {
         return `
             <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:20px;border:1px solid #eee;border-radius:10px">
-                <h2 style="color:#0c4a6e">LifeSolver.app</h2>
+                <h2 style="color:#0c4a6e">life-solver.vercel.app</h2>
                 <p>${bodyText}</p>
                 <div style="background:#f0fdf4;border:1px solid #bbf7d0;padding:15px;border-radius:8px;text-align:center;margin:20px 0">
                     <p style="margin:0;font-size:14px;color:#166534">Your code is</p>
@@ -81,3 +81,4 @@ export class EmailService {
             </div>`;
     }
 }
+
