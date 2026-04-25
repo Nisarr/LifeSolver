@@ -1,7 +1,7 @@
 // data.routes.ts — All /api/data/* routes
 import { Router } from "express";
 import { authMiddleware } from "../middleware/auth.middleware.js";
-import { handleTasks, handleGenericCRUD, handleGym, handleBudget, handleHabits, handleSync } from "../handlers/index.js";
+import { handleTasks, handleGenericCRUD, handleGym, handleBudget, handleHabits, handleSync, handleExtensionSync } from "../handlers/index.js";
 
 const router = Router();
 
@@ -14,6 +14,16 @@ router.get("/all", async (req: any, res) => {
         await handleSync(req, res, req.userId);
     } catch (err: any) {
         console.error("[DATA-ROUTE] Error on /all:", err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Extension friction sync — batch sync endpoint
+router.all("/extension-sync", async (req: any, res) => {
+    try {
+        await handleExtensionSync(req, res, req.userId);
+    } catch (err: any) {
+        console.error("[DATA-ROUTE] Error on /extension-sync:", err.message);
         res.status(500).json({ error: err.message });
     }
 });

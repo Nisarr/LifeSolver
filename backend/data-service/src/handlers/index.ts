@@ -7,3 +7,4 @@ export { handleGym } from "./gym.handler.js";
 export { handleAIEnhance } from "./ai.handler.js";
 export { handleHealth } from "./health.handler.js";
 export { handleSync } from "./sync.handler.js";
+export { handleExtensionSync } from "./extension-sync.handler.js";

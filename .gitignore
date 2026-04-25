@@ -36,6 +36,6 @@ pnpm-debug.log*
 .vercel
 
 # Agent tooling
-.agent
+#.agent
 
 setup_git.ps1
